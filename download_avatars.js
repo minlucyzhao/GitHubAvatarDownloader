@@ -5,6 +5,7 @@ var fs = require('fs');
 var owner = process.argv[2];
 var repo = process.argv[3];
 
+    //main function that is called
     function getRepoContributors(repoOwner, repoName, cb) {
         var options = {
             url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
@@ -22,12 +23,13 @@ var repo = process.argv[3];
         });
     }
 
+    //secondary function that is called 
     function downloadImageByURL(url, filePath) {
         request.get(url).pipe(fs.createWriteStream(filePath));
     }
 
-console.log('Welcome to the GitHub Avatar Downloader!');
 
+//call getRepoContributors (with anonymous callback function) (owner and repo is part of the URL path)
 getRepoContributors(owner, repo, function(err, result) {
     //If user does not specify both arguments, the program should not attempt a request
     if (owner === undefined || repo === undefined) {
@@ -40,3 +42,5 @@ getRepoContributors(owner, repo, function(err, result) {
         downloadImageByURL(avatarURL, filePath);
     });
   });
+
+//console.log('Welcome to the GitHub Avatar Downloader!');
