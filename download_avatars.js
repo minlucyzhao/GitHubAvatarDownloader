@@ -2,6 +2,9 @@ var request = require('request'); //access external module
 var secrets = require('./secrets'); // "./" to access module files within the folder
 var fs = require('fs');
 
+var owner = process.argv[2];
+var repo = process.argv[3];
+
     function getRepoContributors(repoOwner, repoName, cb) {
         var options = {
             url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
@@ -25,14 +28,12 @@ var fs = require('fs');
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(owner, repo, function(err, result) {
     console.log("Errors:", err);
     //iterate over the results and console log the value of each avatar_url 
     result.forEach(function(result) {
         var avatarURL = result.avatar_url;
-        var filePath = "avatars/ " + avatarURL.login + ".jpg";
+        var filePath = "./avatars/ " + result.login + ".jpg";
         downloadImageByURL(avatarURL, filePath);
     });
   });
-
-downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");``
