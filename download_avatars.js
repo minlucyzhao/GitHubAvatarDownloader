@@ -1,5 +1,6 @@
 var request = require('request'); //access external module
 var secrets = require('./secrets'); // "./" to access module files within the folder
+var fs = require('fs');
 
     function getRepoContributors(repoOwner, repoName, cb) {
         var options = {
@@ -17,6 +18,10 @@ var secrets = require('./secrets'); // "./" to access module files within the fo
         });
     }
 
+    function downloadImageByURL(url, filePath) {
+        request.get(url).pipe(fs.createWriteStream(filePath));
+    }
+
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 getRepoContributors("jquery", "jquery", function(err, result) {
@@ -27,3 +32,5 @@ getRepoContributors("jquery", "jquery", function(err, result) {
         console.log("Avatar URL:", avatarURL);
     });
   });
+
+downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");``
