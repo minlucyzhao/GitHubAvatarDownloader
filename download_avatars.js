@@ -7,7 +7,8 @@ var fs = require('fs');
             url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
             headers: {
             'User-Agent': 'request',
-            Authorization: 'token ' + secrets.GITHUB_TOKEN //Authorization: token YOUR_TOKEN_HERE --> in this format
+            //Authorization: token YOUR_TOKEN_HERE --> in this format
+            Authorization: 'token ' + secrets.GITHUB_TOKEN 
           }
         };
         request(options, function(err, res, body) {
@@ -29,7 +30,8 @@ getRepoContributors("jquery", "jquery", function(err, result) {
     //iterate over the results and console log the value of each avatar_url 
     result.forEach(function(result) {
         var avatarURL = result.avatar_url;
-        console.log("Avatar URL:", avatarURL);
+        var filePath = "avatars/ " + avatarURL.login + ".jpg";
+        downloadImageByURL(avatarURL, filePath);
     });
   });
 
