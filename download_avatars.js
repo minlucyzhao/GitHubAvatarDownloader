@@ -29,7 +29,10 @@ var repo = process.argv[3];
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 getRepoContributors(owner, repo, function(err, result) {
-    console.log("Errors:", err);
+    //If user does not specify both arguments, the program should not attempt a request
+    if (owner === undefined || repo === undefined) {
+        console.log("Error " + err + ": Please specify an owner and/or repo");
+    }
     //iterate over the results and console log the value of each avatar_url 
     result.forEach(function(result) {
         var avatarURL = result.avatar_url;
